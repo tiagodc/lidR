@@ -32,13 +32,13 @@ Imports:
     RCSF,
     rgeos,
     rgdal (>= 1.5.8),
-    rgl,
     rlas (>= 1.3.5),
     sf,
     stats,
     tools,
     utils
 Suggests:
+    rgl,
     EBImage,
     concaveman,
     crayon,
