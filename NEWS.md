@@ -1,12 +1,33 @@
 If you are viewing this file on CRAN, please check [the latest news on GitHub](https://github.com/Jean-Romain/lidR/blob/master/NEWS.md) where the formatting is also better
 
-## lidR v3.1.3 (Release date: ...)
+## lidR v3.1.4 (Release date: 2021-06-22)
 
-- Fix: `las_check(..., deep = TRUE)` was not working in parallel ([#411](https://github.com/Jean-Romain/lidR/issues/411).
-- Fix: `readLAScatalog()` throw an more informative error when attempting to read an non-existing folder.
-- Fix: the LAScatalog processing engine printed the outputs twice for rare function that print something like `las_check()`  ([#414](https://github.com/Jean-Romain/lidR/issues/414))
+- Change: `manual()` now uses the middle button to perform the selection. Historically the button was "right" but later the right button was added in lidR and attributed to the dragging action. By using "right" in this function this disabled the possibility to drag the scene. Consequently we changed the default to use the middle button. ([#442](https://github.com/Jean-Romain/lidR/issues/442)).
+- Change: `manual()` now removes all apices in the selection rectangle when removing some false positive ([#445](https://github.com/Jean-Romain/lidR/issues/445)).
+- Doc: fix some code block rendering in `catalog_apply` man page
+- Fix: fix catalog processing engine edge case when the last chunks fail ([#435](https://github.com/Jean-Romain/lidR/issues/435)).
+- Fix: `voxel_metrics()` with `all_voxels = TRUE` did not work as expected. The insertion of empty voxels corrupted some of the real voxels. This bug lead to invalid output and some floating points precision errors lead to supernumerary voxels ([#437](https://github.com/Jean-Romain/lidR/issues/437), [#439](https://github.com/Jean-Romain/lidR/issues/439)).
+- Fix: `grid_terrain()` used with a `LAScatalog` no longer propagated the options. For example when using `use_class = c(2L, 8L, 9L, 10L)` this was not propagated and the option was actually the default one i.e. `use_class = c(2L, 9L)`. This bug was introduced in 3.1.0
+- Fix: `delineate_crowns()` now returns `NULL` if the input point-cloud has only points with treeID = NA. It also triggers a warning. ([#438](https://github.com/Jean-Romain/lidR/issues/438)).
+- Fix: `manual()` the function that allow for finding the trees manually was no longer working probably because of some slight modifications in the `rgl` package.
+- Enhance: the `plot` function used to display the output of `voxel_metrics()` now internally uses the same function than `LAS` objects. This enhances the rendering using the `clear_artifact` option by default and allows for a lot more flexibility in the rendering.
+- Enhance: new parameter `button` in `manual()` to choose which button to use.
+- Enhance: `segment_trees()` now print a message if all points are `NA` to suggest to use other parameters
+
+## lidR v3.1.3 (Release date: 2021-05-20)
+
+- Fix: `las_check(..., deep = TRUE)` was not working in parallel ([#411](https://github.com/Jean-Romain/lidR/issues/411)).
+- Fix: the LAScatalog processing engine printed the outputs twice for rare functions that print something like `las_check()`  ([#414](https://github.com/Jean-Romain/lidR/issues/414))
+- Fix: the internal way lidR is checking for nested parallelism has been reworked in depth fixing some bugs and allowing to support more strategies thanks to @Lenostatos  ([#418](https://github.com/Jean-Romain/lidR/issues/418), [#421](https://github.com/Jean-Romain/lidR/issues/421))
+- Fix: `merge_spatial()` did not work with `sf` objects.
 - New: `las_check()` introduces a new type of message called "message". Some message previously classified as "warning" are now classified as "message". Warnings are now displayed in orange and messages in yellow. The output of `las_check()` has now 3 items instead of 2.
-- Enhance: `max_cr_factor` in `silva2019()` is now allowed to be in [0, inf[ instead of [0,1] (([#417](https://github.com/Jean-Romain/lidR/issues/417))
+- New: `stdmetrics_z` gains a new parameter `zmin = 0` to control the lower bound of the integration for metrics `zpcumx` ([#424](https://github.com/Jean-Romain/lidR/issues/424)).
+- Enhance: `max_cr_factor` in `silva2019()` is now allowed to be in [0, inf[ instead of [0,1] ([#417](https://github.com/Jean-Romain/lidR/issues/417))
+- Enhance: added a workaround to avoid `sp` printing `proj_create: crs not found` for non recognized EPSG codes and avoid throwing warning `Discarded datum [...] in Proj4 definition`
+- Enhance: `readLAScatalog()` throws a more informative error when attempting to read an non-existing folder.
+- Enhance: `readXXXLAS()` now throws an error for `LAScluster` ([#430](https://github.com/Jean-Romain/lidR/issues/430)).
+- Doc: Updates and clarifications in the doc of `stdmetrics`.
+- Misc: removed `LazyData` in `DESCRIPTION`
 
 ## lidR v3.1.2 (Release date: 2021-03-11)
 
